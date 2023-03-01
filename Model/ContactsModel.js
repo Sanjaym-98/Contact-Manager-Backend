@@ -15,4 +15,4 @@ const contactSchema = new mongooose.Schema({
 
 const Contacts = mongooose.model('contactmanager', contactSchema);
 
-module.exports = Contacts;
+module.exports = Contacts; 
