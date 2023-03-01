@@ -18,7 +18,7 @@ router.get('/contacts',async(req,res)=>{
     }catch(e){
         res.status(404).json({
             status:"Failed",
-            message: e.message
+            message: e.message 
         })
     }
 
