@@ -1,15 +1,15 @@
-const express = require(express);
-const mongoose = require(mongoose);
+const express = require('express');
+const mongoose = require('mongoose');
 const User=require('../Model/UserModel');
-const router = require('express-router');
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const secret ="AKPYSA";
 
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended:false}));
+router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({ extended: false }))
 
 const { body, validationResult } = require('express-validator');
 router.post("/login", body('email').isEmail(),async(req,res)=>{
