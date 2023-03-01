@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const objectId = Schema.objectId;
+const ObjectId = Schema.ObjectId;
 
 
 const UserModelSchema = new Schema ({
@@ -8,6 +8,6 @@ const UserModelSchema = new Schema ({
     password:{type:String,min:6,max:12}
 },{timestamps:true})
 
-const User = mongoose.model("contactmanager",UserModelSchema);
+const User = mongoose.model("usermanager",UserModelSchema);
 
 module.exports =User;
