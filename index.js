@@ -8,11 +8,20 @@ const connection = require('./Connection/connection');
 connection();
 const loginroutes = require('./Routes/login');
 const registerroutes = require('./Routes/register');
+const contactroutes = require('./Routes/contacts')
+const searchroute = require('./Routes/search')
 const secret = "AKPYSA";
 const jwt = require('jsonwebtoken');
 
+
+
+
+
+
+
 app.use("/api/v1/", loginroutes);
 app.use("/api/v1/", registerroutes);
+app.use("/api/v1/", contactroutes)
 
 app.get("*", (req, res) => {
   res.status(404).send("this is not a proper request ");
