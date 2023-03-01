@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const Contacts = require("../Model/ContactsModel")
-const bodyparser = require("body-parser")
+const { urlencoded } = require('body-parser')
 // Your routing code goes here
 
+
+router.use(express.json())
+router.use(express.urlencoded())
 
 
 router.get('/contacts',async(req,res)=>{
@@ -38,3 +41,6 @@ router.post('/contacts',async(req,res)=>{
         })
     }
 })
+
+
+module.exports = router;

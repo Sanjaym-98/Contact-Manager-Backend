@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Contacts = require("../Model/ContactsModel")
+const Contacts = require('../Model/ContactsModel')
 
 
 
@@ -7,7 +7,7 @@ router.get("/contacts/:id", async(req, res)=>{
     try{
         console.log(req.params.id)
         const search = `\^${req.params.id}`
-        const contacts = await contactsctModel.find({$and:[{email:{$regex:search}}, {userId:req.userId}]})
+        const contacts = await Contacts.find({$and:[{email:{$regex:search}}, {userId:req.userId}]})
         res.status(200).json({
             status:"Success",
             contacts:contacts
@@ -19,3 +19,7 @@ router.get("/contacts/:id", async(req, res)=>{
         })
     }
 })
+
+
+
+module.exports = router;
