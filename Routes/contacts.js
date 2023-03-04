@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const express = require("express")
-const Contacts = require("../Model/ContactsModel")
+const Contacts = require("../Model/ContactsModel");
+const multer=require('multer')
+const csv = require('csvtojson')
 // const { urlencoded } = require('body-parser')
 const bodyParser =  require("body-parser")
 // Your routing code goes here
@@ -10,6 +12,17 @@ router.use(bodyParser.urlencoded({ extended: false }))
 // router.use(express.json())
 // router.use(express.urlencoded())
 
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, 'uploads');
+    },
+    filename: function(req, file, cb) {
+      cb(null, file.originalname);
+    }
+  });
+  
+  const upload = multer({ storage: storage });
 
 router.get('/contacts',async(req,res)=>{
     try{ 
@@ -33,13 +46,25 @@ router.get('/contacts',async(req,res)=>{
 
 router.post('/contacts',async(req,res)=>{
     try{
-        console.log("inside")
-        const contacts = await Contacts.create(req.body)
-        console.log(req.body)
-        res.status(201).json({
-            status:"Success",
-            contacts
-        })
+        // console.log("inside")
+        // const contacts = await Contacts.create(req.body)
+        // console.log(req.body)
+        // res.status(201).json({
+        //     status:"Success",
+        //     contacts
+        // })
+        const userID = req.body.userId
+    
+        csv()
+          .fromFile(req.file.path)
+          .then(jsonData => {
+            const dataWithUserId = jsonData.map(data => ({...data, userID}));
+            Contacts.insertMany(dataWithUserId, function(error, documents) {
+              if (error) return res.status(500).send(error);
+              res.status(200).json({data:documents});
+            });
+          });
+        
     }catch(e){
         res.status(404).json({
             status:"Failed",

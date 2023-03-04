@@ -7,19 +7,20 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const secret ="AKPYSA";
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended:false}));
+router.use(express.urlencoded());
+router.use(express.json());
 
-const { body, validationResult } = require('express-validator');
+// const { body, validationResult } = require('express-validator');
+// body('email').isEmail(),
+// body('password').isLength({min:6,max:12}),
+router.post("/register",
 
-router.post("/register",body('email').isEmail(),
-body('password').isLength({min:6,max:12}),
 async(req, res)=>{
 try{
-    const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+    // const errors = validationResult(req);
+    //     if (!errors.isEmpty()) {
+    //         return res.status(400).json({ errors: errors.array() });
+    //     }
 
         const {email,password}= req.body;
         const user = await User.findOne({email});
