@@ -53,21 +53,31 @@ router.post('/contacts',async(req,res)=>{
         //     status:"Success",
         //     contacts
         // })
-        const userID = req.body.userId
+        // const userID = req.body.userId
     
-        csv()
-          .fromFile(req.file.path)
-          .then(jsonData => {
-            const dataWithUserId = jsonData.map(data => ({...data, userID}));
-            Contacts.insertMany(dataWithUserId, function(error, documents) {
-              if (error) return res.status(500).send(error);
-              res.status(200).json({data:documents});
-            });
+        // csv()
+        //   .fromFile(req.file.path)
+        //   .then(jsonData => {
+        //     const dataWithUserId = jsonData.map(data => ({...data, userID}));
+        //     Contacts.insertMany(dataWithUserId, function(error, documents) {
+        //       if (error) return res.status(500).send(error);
+        //       res.status(200).json({data:documents});
+        //     });
+        const userId = req.userId
+        const contactsArr = req.body
+        console.log(req.body)
+        const contactDetails = contactsArr.map(data=>{return{...data, userId:userId}})
+        console.log(contactDetails)
+        const data =await Contacts.create(contactDetails)
+        res.status(201).json({
+            status:"Success",
+            message:"posted Success fully",
+            data
           });
         
     }catch(e){
         res.status(404).json({
-            status:"Failed",
+            status:"Failed path file",
             message: e.message
         })
     }
