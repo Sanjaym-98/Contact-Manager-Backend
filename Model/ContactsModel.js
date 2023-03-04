@@ -1,7 +1,7 @@
 const mongooose = require('mongoose');
-const ObjectId = require('mongoose').ObjectId
+const objectId = require('mongoose').ObjectId
 
-const ContactSchema = new mongooose.Schema({
+const contactSchema = new mongooose.Schema({
     // Your code goes here
     name : {type: String},
     designation : {type: String},
@@ -10,9 +10,9 @@ const ContactSchema = new mongooose.Schema({
     email : {type: String},
     phoneNumber : {type: Number},
     country : {type: String},
-    userId : {type : ObjectId, ref : "usermanager"}
+    userId : {type : objectId,ref:"usermanager"}
 },{timestamps : true})
 
-const Contacts = mongooose.model('contactmanager', ContactSchema);
+const Contacts = mongooose.model('contactmanager', contactSchema);
 
-module.exports = Contacts; 
+module.exports = Contacts;

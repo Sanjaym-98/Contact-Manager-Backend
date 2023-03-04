@@ -8,28 +8,30 @@ const bodyParser = require('body-parser');
 const secret ="AKPYSA";
 
 
-router.use(bodyParser.json())
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(express.json());
+router.use(express.urlencoded({ extended: false }));
 
-const { body, validationResult } = require('express-validator');
-router.post("/login", body('email').isEmail(),async(req,res)=>{
+// const { body, validationResult } = require('express-validator');
+// , body('email').isEmail()
+
+router.post("/login",async(req,res)=>{
     try{
 
-        const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
+        // const errors = validationResult(req);
+        //     if (!errors.isEmpty()) {
+        //         return res.status(400).json({ errors: errors.array() });
+        //     }
             const {email, password}=req.body;
-            const user =await User.findOne({email});
+            const user =await User.findOne({email:email});
             if(!user){
-                res.status(400).json({
+              return res.status(400).json({
                     status:"Failed",
                     message:"User is not Registered"
                 })
             }
             bcrypt.compare(password, user.password, function (err, result){
                 if(err){
-                    res.status(500).json({
+                 return res.status(500).json({
                         status:"Failed",
                         message:err.message
                     })
@@ -39,10 +41,11 @@ router.post("/login", body('email').isEmail(),async(req,res)=>{
                         exp:Math.floor(Date.now() /1000)+(60*60),
                         data:user._id,
                     },secret);
+                    const userdetails = {...user._doc, password: undefined}
                     return res.status(201).json({
                         status:"Success",
-                        message:"Login done",
-                        token
+                        message: {token, userdetails}
+
                     })
                 }else {
                     res.status(400).json({
