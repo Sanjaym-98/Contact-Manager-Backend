@@ -63,6 +63,7 @@ app.use("/api/v1/contacts/:id",(req,res,next)=>{
   }
 })
 
+const URL = "mongodb+srv://naraveniakhil:A@khil2244@instacloneserver.tqjlz9f.mongodb.net/?retryWrites=true&w=majority";
 
 app.use("/api/v1/", loginroutes);
 app.use("/api/v1/", registerroutes);
@@ -75,3 +76,6 @@ app.get("*", (req, res) => {
 app.listen(5000, () => {
   console.log("server is up at 5000"); 
 });
+// mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology:true})
+// .then(()=>console.log('Database connected Succesfully'))
+// .catch((error)=> console.log(error.message));
