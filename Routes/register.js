@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const secret ="AKPYSA";
 
-router.use(express.urlencoded());
+router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 
 // const { body, validationResult } = require('express-validator');
