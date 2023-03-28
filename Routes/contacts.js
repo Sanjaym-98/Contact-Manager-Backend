@@ -26,7 +26,8 @@ const storage = multer.diskStorage({
 
 router.get('/contacts',async(req,res)=>{
     try{ 
-        const contacts = await Contacts.find({userId:req.userId})
+        const {page = 1} = req.query
+        const contacts = await Contacts.find({userId:req.userId})..skip((page-1)*8).limit(8);
         console.log(req.userId)
         res.status(201).json({
             
@@ -85,7 +86,6 @@ router.post('/contacts',async(req,res)=>{
 
 router.delete('/contacts', async (req, res) => {
     try {
-        
         const data = await Contacts.deleteMany({_id:{$in:req.body}})
         console.log(data)
         res.status(200).json({
